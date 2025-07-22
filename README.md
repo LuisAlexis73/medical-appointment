@@ -1,12 +1,18 @@
+# **⚠️ Proyecto en desarrollo**
+
+> Este repositorio está en fase de desarrollo activo y **aún no ha sido lanzado a producción**. Las funcionalidades, documentación y estructura pueden cambiar sin previo aviso.
+
+---
+
 # 🏥 Sistema de Reservas Médicas - Odoo 18
 
-Este proyecto es una aplicación web para la gestión de **reservas médicas**, desarrollada sobre **Odoo 18**. Está diseñada para permitir a los usuarios realizar reservas de turnos médicos de forma simple, mientras que los administradores pueden gestionar pacientes, profesionales de la salud y la disponibilidad de horarios desde un entorno centralizado.
+Este proyecto es una aplicación web para la gestión de **reservas médicas**, desarrollada sobre **Odoo 18**. Permite a los usuarios reservar turnos médicos de forma sencilla, administrar pacientes y profesionales, y gestionar horarios de atención.
 
 ## 🚀 Tecnologías utilizadas
 
-- **Odoo 18**: Framework de ERP para la lógica de negocio y gestión del sistema.
-- **PostgreSQL**: Base de datos relacional utilizada por Odoo.
-- **Docker & Docker Compose**: Para la orquestación y despliegue local de los servicios.
+- **Odoo 18**: Framework ERP para la lógica de negocio y gestión.
+- **PostgreSQL**: Base de datos relacional.
+- **Docker & Docker Compose**: Orquestación y despliegue local.
 
 ## 🧪 Funcionalidades principales
 
@@ -17,15 +23,15 @@ Este proyecto es una aplicación web para la gestión de **reservas médicas**, 
 
 ---
 
-## ⚙️ Cómo levantar el entorno local
+## ⚙️ Instalación y puesta en marcha
 
 ### ✅ Requisitos previos
 
-- Tener instalado [Docker](https://docs.docker.com/get-docker/) y [Docker Compose](https://docs.docker.com/compose/install/)
+- [Docker](https://docs.docker.com/get-docker/) y [Docker Compose](https://docs.docker.com/compose/install/) instalados.
 
 ### 🚨 Primer uso
 
-1. Cloná este repositorio:
+1. Clona este repositorio:
 
    ```bash
    git clone https://github.com/LuisAlexis73/medical-appointment.git
@@ -40,29 +46,51 @@ Este proyecto es una aplicación web para la gestión de **reservas médicas**, 
    docker-compose up -d
    ```
 
-4. Accedé al portal de Odoo:
-   ```bash
+4. Accede al portal de Odoo:
+   ```
    http://localhost:8069
    ```
 
+#### ⚠️ Posibles problemas
+
+- Si el puerto 8069 está ocupado, modifícalo en `docker-compose.yml`.
+- Verifica los permisos de los volúmenes para evitar errores de escritura.
+
 ### 📁 Estructura del proyecto
 
-├── docker-compose.yml # Orquestador de servicios
-├── odoo # Volumen persistente para Odoo
-├── postgres # Volumen persistente para PostgreSQL
-├── addons # Módulos personalizados (si aplica)
+```
+├── docker-compose.yml    # Orquestador de servicios
+├── odoo                 # Volumen persistente para Odoo
+├── postgres             # Volumen persistente para PostgreSQL
+├── addons               # Módulos personalizados
 └── README.md
+```
 
-### Notas
+### 🛠️ Personalización y desarrollo
 
-- El archivo `.env` contiene las variables de entorno necesarias para el funcionamiento del entorno local.
-- El archivo `docker-compose.yml` define los servicios necesarios para el funcionamiento del entorno local.
-- El usuario y contraseña por defecto pueden configurarse en el `docker-compose.yml` o bien en el primer inicio de sesión.
-- Si estas desarrollando módulos personalizados, puedes agregarlos en el archivo `addons`. Asegurate de que el archivo `__manifest__.py` tenga los campos necesarios para que el módulo se pueda instalar correctamente.
+- Agrega tus módulos personalizados en la carpeta `addons`.
+- Verifica que cada módulo tenga su archivo `__manifest__.py` correctamente configurado.
+- Para instalar nuevos módulos, sigue la documentación oficial de Odoo.
+
+### 🤝 Contribución
+
+¿Quieres colaborar? ¡Genial! Por favor, sigue estos pasos:
+
+1. Haz un fork del repositorio.
+2. Crea una rama con tu mejora/bugfix.
+3. Envía un pull request describiendo los cambios.
+
+### 📚 Recursos adicionales
+
+- [Documentación Odoo](https://www.odoo.com/documentation/18.0/)
+- [Documentación Docker](https://docs.docker.com/)
+- [Guía rápida para módulos Odoo](https://www.odoo.com/documentation/18.0/reference/addons.html)
 
 ### Contacto
 
-Si tienes alguna duda o sugerencia, no dudes en contactarme en [luisalexis73@gmail.com](mailto:luisalexis73@gmail.com).
+Para consultas, sugerencias o reportes de errores, por favor abre un [issue](https://github.com/LuisAlexis73/medical-appointment/issues) en este repositorio.  
+De esta manera, tu aporte podrá ayudar a otros usuarios y facilitar el seguimiento de las respuestas.
+Si tienes alguna duda o sugerencia, no dudes en contactarme en `luisalexisgalarza73@gmail.com`.
 
 ## 📝 Licencia
 
