@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_medical_specialty_list" model="ir.ui.view">
+        <field name="name">medical.specialty.list</field>
+        <field name="model">medical.specialty</field>
+        <field name="arch" type="xml">
+            <list string="Especialidades">
+                <field name="name"/>
+                <field name="description"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_medical_specialty_form" model="ir.ui.view">
+        <field name="name">medical.specialty.form</field>
+        <field name="model">medical.specialty</field>
+        <field name="arch" type="xml">
+            <form string="Especialidad Médica">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="description"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_medical_specialty" model="ir.actions.act_window">
+        <field name="name">Gestión de especialidades</field>
+        <field name="res_model">medical.specialty</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Crea una nueva especialidad
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_medical_specialty" name="Especialidades Médicas" parent="menu_medical_appointment_root" action="action_medical_specialty"/>
+</odoo>

@@ -1,0 +1,108 @@
+Sistema de gestión de citas médicas con Odoo 18
+
+---
+
+### 1. Módulos de Odoo a Utilizar
+Odoo ofrece módulos que pueden servir como base para tu sistema:
+Calendar (Calendario): Para gestionar citas, horarios y disponibilidad.
+CRM/Contacts (Clientes/Contactos): Para gestionar pacientes y doctores como contactos.
+Sales (Ventas): Si se requiere facturar por citas.
+Website (Sitio Web): Para una interfaz web responsive y accesible.
+Custom Module (Módulo Personalizado): Para funcionalidades específicas no cubiertas por módulos nativos.
+
+---
+
+### 2. Roles y Funcionalidades Clave
+#### **Pacientes**
+- **Inicio de Sesión:**
+  Usar el módulo de **Portal de Usuarios** (website) para que los pacientes accedan con credenciales.
+- **Pedir Cita:**
+  - Crear un formulario en el portal donde los pacientes seleccionen:
+    - Especialidad (desplegable dinámico).
+    - Doctor (filtrado por especialidad).
+    - Fecha y hora (con validaciones de disponibilidad).
+  - Validaciones:
+    - Chequear disponibilidad en el módulo **Calendar**.
+    - Limitar 3 citas por paciente en 24 horas (restricción en Python).
+    - Enviar notificación por correo (usar plantillas de correo de Odoo).
+- **Ver/Cancelar Citas:**
+  Listar citas del paciente con vistas Kanban/Lista en el portal.
+
+#### **Personal Sanitario (Doctores)**
+- **Agenda de Citas:**
+  - Vista de calendario personalizada (filtrada por usuario/doctor).
+  - Mostrar detalles de la cita (motivo, datos del paciente).
+- **Historial de Citas:**
+  Vista de registros anteriores con opción de filtrado.
+
+#### **Administrador**
+- **Gestión de Especialidades:**
+  Modelo personalizado (`medical.specialty`) con campos: nombre, descripción.
+- **Gestión de Doctores:**
+  - Extender el modelo `res.partner` o usar `hr.employee` para doctores.
+  - Asignar especialidades y horarios.
+- **Gestión de Horarios/Turnos:**
+  - Usar el módulo **Resource** de Odoo para definir horarios de trabajo.
+  - Crear turnos recurrentes (ej: "Lunes a Viernes, 9:00-15:00").
+- **Gestión de Pacientes:**
+  - Validación de DNI (restricción única en el campo `vat` de `res.partner`).
+- **Gestión de Citas:**
+  - Panel de control con filtros por especialidad/fecha.
+  - Cancelar citas (cambiar estado o eliminar registros).
+
+---
+
+### **3. Desarrollo Personalizado Necesario**
+Para cubrir todas las especificaciones, se requieren:
+1. **Modelo de Citas (`medical.appointment`):**
+   - Campos: Paciente (`res.partner`), Doctor (`hr.employee`), Especialidad (`medical.specialty`), Fecha/Hora, Estado (Confirmado/Cancelado), Motivo.
+   - Restricciones SQL para evitar duplicados y límites de 3 citas/24h.
+   - Relación con `calendar.event` para integración con el calendario.
+
+2. **Vistas y Formularios:**
+   - Portal web responsive para pacientes (usando QWeb templates).
+   - Calendario personalizado para doctores (extender `web\_calendar`).
+   - Panel de administración con vistas Tree/Form/Search.
+
+3. **Notificaciones por Correo:**
+   - Plantillas de correo para confirmación/cancelación de citas.
+   - Configuración de servidores SMTP en Odoo.
+
+4. **Seguridad y Accesos:**
+   - Reglas de registro para que pacientes solo vean sus citas.
+   - Permisos de administrador para gestionar especialidades/doctores.
+
+---
+
+### **4. Tecnologías y Herramientas**
+- **Backend:** Python (para lógica de negocio) y PostgreSQL (base de datos).
+- **Frontend:** XML/QWeb (vistas Odoo), JavaScript (para interacciones dinámicas).
+- **Responsive Design:** Framework CSS de Odoo (basado en Bootstrap).
+
+---
+
+### **5. Pasos para Implementación**
+1. **Instalar Odoo 18:** En servidor local o en la nube.
+2. **Configurar Módulos Base:** Activar Calendar, CRM, Website.
+3. **Crear Módulo Personalizado:**
+   - Definir modelos (`medical.specialty`, `medical.appointment`).
+   - Extender modelos existentes (`res.partner`, `hr.employee`).
+4. **Desarrollar Vistas y Funcionalidades:**
+   - Portal web para pacientes.
+   - Calendario para doctores.
+   - Panel de administración.
+5. **Pruebas y Validación:**
+   - Simular flujos de usuario (paciente, doctor, admin).
+   - Verificar restricciones de disponibilidad y límites.
+6. **Despliegue y Mantenimiento:**
+   - Configurar dominio y SSL para acceso seguro.
+   - Actualizaciones periódicas y respaldos.
+
+---
+
+### **6. Ventajas de Usar Odoo**
+- **Integración Nativa:** Con módulos como Facturación, Inventario o RRHH si se escala.
+- **Personalización Rápida:** Gracias a su arquitectura modular y ORM.
+- **Comunidad y Soporte:** Amplia documentación y plugins disponibles.
+
+---

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_medical_appointment_list" model="ir.ui.view">
+        <field name="name">medical.appointment.list</field>
+        <field name="model">medical.appointment</field>
+        <field name="arch" type="xml">
+            <list string="Citas médicas">
+                <field name="patient_id"/>
+                <field name="doctor_id"/>
+                <field name="specialty_id"/>
+                <field name="start_datetime"/>
+                <field name="end_datetime"/>
+                <field name="state"/>
+                <field name="calendar_event_id" readonly="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_medical_appointment_form" model="ir.ui.view">
+        <field name="name">medical.appointment.form</field>
+        <field name="model">medical.appointment</field>
+        <field name="arch" type="xml">
+            <form string="Cita médica">
+                <sheet>
+                    <header>
+                        <button name="action_confirm_appointment"
+                                type="object"
+                                string="Confirmar cita"
+                                class="btn-primary"
+                                invisible="calendar_event_id == False"/>
+                        
+                        <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,cancelled"/>
+                    </header>
+                    <group>
+                        <field name="patient_id"/>
+                        <field name="doctor_id"/>
+                        <field name="specialty_id"/>
+                        <field name="start_datetime"/>
+                        <field name="end_datetime"/>
+                        <field name="reason"/>
+                        <field name="state"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_medical_appointment" model="ir.actions.act_window">
+        <field name="name">Gestión de citas médicas</field>
+        <field name="res_model">medical.appointment</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Crea una nueva cita médica
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_medical_appointment_root" name="Citas médicas" sequence="10"/>
+    <menuitem id="menu_medical_appointment" name="Gestión de citas médicas" parent="menu_medical_appointment_root" action="action_medical_appointment"/>
+</odoo>
