@@ -59,11 +59,11 @@ Este proyecto es una aplicación web para la gestión de **reservas médicas**, 
 ### 📁 Estructura del proyecto
 
 ```
-├── docker-compose.yml    # Orquestador de servicios
-├── odoo                 # Volumen persistente para Odoo
-├── postgres             # Volumen persistente para PostgreSQL
+├── docker-compose.yml   # Orquestador de servicios
+├── config               # Configuración de Odoo
 ├── addons               # Módulos personalizados
-└── README.md
+├── .env                 # Variables de entorno
+├── README.md            # Documentación del proyecto
 ```
 
 ### 🛠️ Personalización y desarrollo
