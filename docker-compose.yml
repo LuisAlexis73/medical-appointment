@@ -1,28 +1,28 @@
 services:
   web:
-    image: odoo:18.0
-    container_name: odoo_18
+    image: ${WEB_IMAGE_NAME}
+    container_name: ${WEB_HOST}
     depends_on:
-      - appointments.db
+      - appointments-db
     ports:
-      - "8069:8069"
+      - "${WEB_PORT}:8069"
     volumes:
       - odoo18-web-data:/var/lib/odoo
       - ./config:/etc/odoo
       - ./addons:/mnt/extra-addons
     environment:
-      HOST: appointments.db
-      USER: odoo
-      PASSWORD: odoo
-    command: odoo -d odoo_db --db_user=odoo --db_password=odoo --db_host=appointments.db
+      HOST: ${DB_HOST}
+      USER: ${DB_USER}
+      PASSWORD: ${DB_PASSWORD}
+    command: odoo -d odoo_db --db_user=${DB_USER} --db_password=${DB_PASSWORD} --db_host=${DB_HOST}
 
-  appointments.db:
-    image: postgres:17.5
-    container_name: odoo18-db
+  appointments-db:
+    image: ${DB_IMAGE}
+    container_name: ${DB_HOST}
     environment:
-      POSTGRES_DB: postgres
-      POSTGRES_USER: odoo
-      POSTGRES_PASSWORD: odoo
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
       PGDATA: /var/lib/postgresql/data/pgdata
     volumes:
       - odoo18-db-data:/var/lib/postgresql/data
