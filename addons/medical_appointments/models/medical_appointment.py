@@ -20,8 +20,22 @@ class MedicalAppointment(models.Model):
   ], string='Estado', default='draft')
   calendar_event_id = fields.Many2one('calendar.event', string='Evento en calendario', readonly=True, copy=False)
 
+  @api.constrains('patient_id', 'doctor_id', 'specialty_id')
+  def _check_records_existence(self):
+    for rec in self:
+      if not rec.patient_id.exists():
+        raise ValidationError('El paciente seleccionado no existe.')
+
+      if not rec.doctor_id.exists():
+        raise ValidationError('El doctor seleccionado no existe.')
+
+      if not rec.specialty_id.exists():
+        raise ValidationError('La especialidad seleccionada no existe.')
+
+
   @api.constrains('start_datetime', 'end_datetime', 'doctor_id')
   def _check_overlapping_appointments(self):
+    self._check_records_existence()  # Ensure records exist before checking constraints
     for rec in self:
       if not (rec.start_datetime and rec.end_datetime and rec.doctor_id and rec.doctor_id._origin):
         continue
@@ -40,8 +54,10 @@ class MedicalAppointment(models.Model):
       if overlapping:
         raise ValidationError('El doctor ya tiene una cita programada para ese horario')
 
+
   @api.constrains('patient_id', 'start_datetime')
   def _check_patient_daily_limit(self):
+    self._check_records_existence()
     for rec in self:
       if not (rec.start_datetime and rec.patient_id and rec.patient_id._origin):
         continue
@@ -60,13 +76,22 @@ class MedicalAppointment(models.Model):
       if appointments >= 2:
         raise ValidationError('El paciente no puede tener mas de 2 citas programadas para el mismo dia')
 
+
   def action_confirm_appointment(self):
+    self.ensure_one()  # Ensure only one record is processed at a time
+
+    if not self.patient_id.exists() or not self.doctor_id.exists():
+      raise ValidationError('Registros asociados no encontrados. Por favor, verifique que el paciente y el doctor existen.')
+
     for rec in self:
       if rec.state != 'draft':
         continue
 
       if not (rec.doctor_id and rec.doctor_id._origin and rec.patient_id and rec.patient_id._origin):
         raise ValidationError('Debe seleccionar un paciente y un doctor antes de confirmar la cita.')
+      
+      if not (rec.doctor_id and rec.doctor_id._origin):
+        raise ValidationError('Debe seleccionar un doctor válido.')
 
       user = rec.doctor_id.user_id
       if not user:
@@ -83,3 +108,18 @@ class MedicalAppointment(models.Model):
       })
       rec.calendar_event_id = event.id
       rec.state = 'confirmed'
+
+  def action_cancel_appointment(self):
+    for rec in self:
+      if rec.state != 'confirmed':
+        raise ValidationError('Solo se pueden cancelar citas confirmadas.')
+
+      now = fields.Datetime.now()
+      if rec.start_datetime <= now + timedelta(hours=4):
+        raise ValidationError('No se puede cancelar una cita con menos de 4 horas de antelación.')
+
+      rec.state = 'cancelled'
+
+      if rec.calendar_event_id:
+        rec.calendar_event_id.unlink()
+        rec.calendar_event_id = False

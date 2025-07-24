@@ -5,13 +5,13 @@
         <field name="model">medical.appointment</field>
         <field name="arch" type="xml">
             <list string="Citas médicas">
-                <field name="patient_id"/>
-                <field name="doctor_id"/>
-                <field name="specialty_id"/>
-                <field name="start_datetime"/>
-                <field name="end_datetime"/>
-                <field name="state"/>
-                <field name="calendar_event_id" readonly="1"/>
+                <field name="patient_id" />
+                <field name="doctor_id" />
+                <field name="specialty_id" />
+                <field name="start_datetime" />
+                <field name="end_datetime" />
+                <field name="state" />
+                <field name="calendar_event_id" readonly="1" />
             </list>
         </field>
     </record>
@@ -24,21 +24,22 @@
                 <sheet>
                     <header>
                         <button name="action_confirm_appointment"
-                                type="object"
-                                string="Confirmar cita"
-                                class="btn-primary"
-                                invisible="calendar_event_id == False"/>
-                        
-                        <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,cancelled"/>
+                            type="object"
+                            string="Confirmar cita"
+                            class="btn-primary"
+                            invisible="calendar_event_id == False" />
+
+                        <field name="state" widget="statusbar"
+                            statusbar_visible="draft,confirmed,cancelled" />
                     </header>
                     <group>
-                        <field name="patient_id"/>
-                        <field name="doctor_id"/>
-                        <field name="specialty_id"/>
-                        <field name="start_datetime"/>
-                        <field name="end_datetime"/>
-                        <field name="reason"/>
-                        <field name="state"/>
+                        <field name="patient_id" />
+                        <field name="doctor_id" />
+                        <field name="specialty_id" />
+                        <field name="start_datetime" />
+                        <field name="end_datetime" />
+                        <field name="reason" />
+                        <field name="state" />
                     </group>
                 </sheet>
             </form>
@@ -56,6 +57,7 @@
         </field>
     </record>
 
-    <menuitem id="menu_medical_appointment_root" name="Citas médicas" sequence="10"/>
-    <menuitem id="menu_medical_appointment" name="Gestión de citas médicas" parent="menu_medical_appointment_root" action="action_medical_appointment"/>
+    <menuitem id="menu_medical_appointment_root" name="Citas médicas" sequence="10" />
+    <menuitem id="menu_medical_appointment" name="Gestión de citas médicas"
+        parent="menu_medical_appointment_root" action="action_medical_appointment" />
 </odoo>

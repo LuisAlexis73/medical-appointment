@@ -2,6 +2,7 @@ services:
   web:
     image: ${WEB_IMAGE_NAME}
     container_name: ${WEB_HOST}
+    restart: always
     depends_on:
       - appointments-db
     ports:
@@ -19,6 +20,9 @@ services:
   appointments-db:
     image: ${DB_IMAGE}
     container_name: ${DB_HOST}
+    restart: always
+    ports:
+      - "${DB_PORT}:5432"
     environment:
       POSTGRES_DB: ${DB_NAME}
       POSTGRES_USER: ${DB_USER}

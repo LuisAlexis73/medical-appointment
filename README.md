@@ -40,20 +40,22 @@ Este proyecto es una aplicación web para la gestión de **reservas médicas**, 
 
 2. Crea el archivo `.env` a partir del archivo `.env.example`.
 
-3. Levanta el entorno local:
+3. Agrega el flag `-i base` luego de `odoo -d odoo_db` en el archivo `docker-compose.yml` al iniciar el contenedor por primera vez. Luego el flag `-i base` debe quitarse del comando, ya que este indicador recrea la base de datos, puedes agregar los flags `--dev=xml -u medical_appointments` para evitar tener que estar actualziando el modulo personalziado manualmente.
+
+4. Levanta el entorno local:
 
    ```bash
    docker-compose up -d
    ```
 
-4. Accede al portal de Odoo:
+5. Accede al portal de Odoo:
    ```
    http://localhost:8069
    ```
 
 #### ⚠️ Posibles problemas
 
-- Si el puerto 8069 está ocupado, modifícalo en `docker-compose.yml`.
+- Si el puerto 8069 está ocupado, modifícalo en `docker-compose.yml` o dentro del archivo `.env`.
 - Verifica los permisos de los volúmenes para evitar errores de escritura.
 
 ### 📁 Estructura del proyecto
@@ -94,4 +96,4 @@ Si tienes alguna duda o sugerencia, no dudes en contactarme en `luisalexisgalarz
 
 ## 📝 Licencia
 
-Este proyecto está licenciado bajo la [Licencia MIT](LICENSE).
+Este proyecto está licenciado bajo la [LGPLv3](https://www.gnu.org/licenses/lgpl-3.0.en.html).
