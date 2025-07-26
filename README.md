@@ -27,7 +27,7 @@ Este proyecto es una aplicación web para la gestión de **reservas médicas**, 
 
 ### ✅ Requisitos previos
 
-- [Docker](https://docs.docker.com/get-docker/) y [Docker Compose](https://docs.docker.com/compose/install/) instalados.
+- [Docker Desktop](https://docs.docker.com/get-docker/) instalado.
 
 ### 🚨 Primer uso
 
@@ -40,7 +40,7 @@ Este proyecto es una aplicación web para la gestión de **reservas médicas**, 
 
 2. Crea el archivo `.env` a partir del archivo `.env.example`.
 
-3. Agrega el flag `-i base` luego de `odoo -d odoo_db` en el archivo `docker-compose.yml` al iniciar el contenedor por primera vez. Luego el flag `-i base` debe quitarse del comando, ya que este indicador recrea la base de datos, puedes agregar los flags `--dev=xml -u medical_appointments` para evitar tener que estar actualziando el modulo personalziado manualmente.
+3. Agrega el flag `-i base` luego de `odoo -d odoo_db` en el archivo `docker-compose.yml` al iniciar el contenedor por primera vez. Luego el flag `-i base` debe quitarse del comando, ya que este indicador recrea la base de datos.
 
 4. Levanta el entorno local:
 
